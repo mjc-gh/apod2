@@ -14,7 +14,10 @@ class ActiveSupport::TestCase
   end
 
   def html_parser(file)
-    Nokogiri::HTML(fixture_file(file))
+    databits = fixture_file(file).force_encoding('ascii')
+    databits.force_encoding('ascii-8bit') unless databits.valid_encoding?
+
+    Nokogiri::HTML(databits)
   end
 
   def fixture_file(*path)

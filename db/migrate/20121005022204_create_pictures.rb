@@ -1,14 +1,14 @@
 class CreatePictures < ActiveRecord::Migration
   def change
     create_table :pictures do |t|
-      t.string    :ident
       t.string    :title
+      t.date      :date
 
-      t.string    :credit
-      t.text      :credit_link
+      t.text    :media
+      t.text    :media_link
 
-      t.text      :image
-      t.text      :explanation
+      t.text    :credit
+      t.text    :explanation
 
       t.timestamps
     end

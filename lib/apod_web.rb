@@ -5,7 +5,7 @@ class ApodWeb
   include HTTParty
 
   base_uri 'http://apod.nasa.gov/apod'
-  parser Proc.new { |body| Nokogiri::HTML(body) }
+  parser Proc.new { |body| Nokogiri::HTML(body, 'UTF-8') }
 
   def self.index
     get '/archivepix.html'

@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(:version => 20121005022204) do
 
   create_table "pictures", :force => true do |t|
-    t.string   "ident"
     t.string   "title"
-    t.string   "credit"
-    t.text     "credit_link"
-    t.text     "image"
+    t.date     "date"
+    t.text     "media"
+    t.text     "media_link"
+    t.text     "credit"
     t.text     "explanation"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false

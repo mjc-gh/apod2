@@ -24,6 +24,9 @@ group :development, :test do
 end
 
 group :test do
+  # for gopher tests
+  gem 'contest'
+
   gem 'mocha', :require => false
   gem 'fakeweb'
 
