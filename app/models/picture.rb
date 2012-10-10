@@ -1,7 +1,9 @@
 class Picture < ActiveRecord::Base
   attr_protected
 
+  scope :latest, order('date DESC')
+
   def self.last
-    order('date DESC').first
+    latest.first
   end
 end

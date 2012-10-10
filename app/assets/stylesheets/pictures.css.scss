@@ -1,3 +1,26 @@
-// Place all the styles related to the Pictures controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "compass/utilities/general/clearfix";
+@import "compass/css3";
+
+#pictures {
+  margin:0px auto;
+  width:980px;
+  overflow:hidden;
+
+  > li {
+    float:left;
+    height:200px;
+    width:200px;
+
+    line-height:200px;
+    margin:20px 10px;
+
+    text-align:center;
+    > a {
+      > img {
+        vertical-align:middle;
+        max-width:200px;
+        max-height:200px;
+      }
+    }
+  }
+}

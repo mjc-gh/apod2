@@ -11,16 +11,27 @@ class GopherTest < ActiveSupport::TestCase
       assert_equal 809, Gopher.missing_pictures.size
     end
 
-    test "missing_ident with 5 missing" do
+    test "with 5 missing" do
       Picture.create(date: Date.new(2012, 9, 29))
 
       assert_equal 5, Gopher.missing_pictures.size
     end
 
-    test "missing_ident without any missing" do
+    test "without any missing" do
       Picture.create(date: Date.new(2012, 10, 4))
 
       assert_equal 0, Gopher.missing_pictures.size
+    end
+
+    test "order is correct" do
+      Picture.create(date: Date.new(2012, 10, 1))
+      missing = Gopher.missing_pictures
+
+      assert_operator missing.size, :>, 0 # not empty
+
+      (1..missing.size - 2).each do |index|
+        assert_operator missing[index][:date], :<, missing[index+1][:date]
+      end
     end
   end
 
@@ -61,13 +72,13 @@ class GopherTest < ActiveSupport::TestCase
     test "media" do
       picture = fetch
 
-      assert_equal '<img src="image/1210/ison_rolando_960.jpg">', picture.media
+      assert_equal "<img src=\"#{ApodWeb::base_uri}/image/1210/ison_rolando_960.jpg\">", picture.media
     end
 
     test "media_link" do
       picture = fetch
 
-      assert_equal 'image/1210/ison_rolando_1600.jpg', picture.media_link
+      assert_equal "#{ApodWeb::base_uri}/image/1210/ison_rolando_1600.jpg", picture.media_link
     end
 
     context "with utf8 bytes" do

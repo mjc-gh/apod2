@@ -19,7 +19,7 @@ class Gopher
           date = Date.parse(link.previous.text)
 
           if last.nil? || last < date
-            missing << { id: match[1], date: date }
+            missing.unshift id: match[1], date: date
           end
         end
       end
@@ -31,6 +31,7 @@ class Gopher
   # @params [Hash] opts options hash with id and date properties
   # @returns [Picture] newly created Picture object
   def self.fetch_and_create_picture(opts)
+    base_uri = ApodWeb::base_uri
     parser = ApodWeb.view(opts[:id])
     bold_els = parser.css('b')
 
@@ -54,10 +55,10 @@ class Gopher
       exp_node = parser.css('p').find { |p| p.text =~ /^\s+Explanation/ }
 
       # collect striped html of all of the p element's children ignoring certian nodes
-      exp_fragments = exp_node.children.map { |node| node.to_html.strip unless node.text.blank? || node.text =~ /^\s+Explanation/ }
+      exp_fragments = exp_node.children.map { |node| node.to_html unless node.text.blank? || node.text =~ /^\s+Explanation/ }
       exp_fragments.compact!
 
-      picture.explanation = exp_fragments.join
+      picture.explanation = exp_fragments.join.strip
 
 
       # look for media; start with img element
@@ -65,13 +66,15 @@ class Gopher
 
       if !imgs.empty?
         img = imgs.first
+        img[:src] = "#{base_uri}/#{img[:src]}"
 
         img.attributes.keys.select { |k| k != 'src' }.each { |a| img.remove_attribute(a) }
 
-        picture.media = img.to_html
-        picture.media_link = img.parent[:href]
-      end
+        href = img.parent[:href]
 
+        picture.media = img.to_html
+        picture.media_link = href =~ /^http/ ? href : "#{base_uri}/#{href}"
+      end
 
       # Lastly, we save the picture
       picture.save
