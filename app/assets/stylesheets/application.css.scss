@@ -1,6 +1,14 @@
 /*
  *= require_self
- *= require includes.css.scss
+ *= require reset.css.scss
  *= require_tree .
  */
 
+@import "compass";
+
+.container {
+  @include pie-clearfix;
+
+  width:984px;
+  margin:0 auto;
+}

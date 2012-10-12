@@ -1,0 +1,18 @@
+#picture.container
+  - if @picture.next_picture
+    = link_to 'Next', @picture.next_picture, class: 'next'
+
+  - if @picture.previous_picture
+    = link_to 'Previous', @picture.previous_picture, class: 'previous'
+
+  .img
+    - if @picture.media
+      = @picture.media.html_safe
+    - else
+      %strong No Image Available!
+
+  %p
+    - if @picture.explanation
+      = @picture.explanation.html_safe
+    - else
+      %strong No Explanation Available!

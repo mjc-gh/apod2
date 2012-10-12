@@ -1,0 +1,5 @@
+%ul#pictures
+  - @pictures.each do |picture|
+    %li
+      = link_to picture do
+        = picture.media.html_safe

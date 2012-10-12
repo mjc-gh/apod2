@@ -1,0 +1,42 @@
+@import "compass";
+
+body { background:#F1F1F1; font-family: 'Ubuntu', sans-serif; }
+a { text-decoration:none; }
+
+#top {
+  $experimental-support-for-svg: true;
+
+  background-color: rgb(96,108,136);
+  @include filter-gradient(#606c88, #3f4c6b, vertical);
+  @include background-image(linear-gradient(top, rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%));
+  @include box-shadow(0px 0px 25px 5px rgba(0,0,0,.60));
+
+  overflow:hidden;
+  height:100px;
+  color:#FFF;
+  font-family: 'Syncopate', sans-serif;
+
+  a {
+    font-weight:bold;
+    color:#FFF;
+  }
+
+  h1 {
+    @include text-shadow(2px 2px 6px rgba(0,0,0,.50));
+
+    margin:20px 0;
+    margin:0 auto;
+    line-height:80px;
+
+    font-size:45px;
+    text-align:center;
+  }
+
+  h2 {
+    float:right;
+  }
+}
+
+#page {
+
+}
