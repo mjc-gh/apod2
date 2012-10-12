@@ -16,4 +16,9 @@ class PictureTest < ActiveSupport::TestCase
     assert_equal pictures[2], pictures[1].previous_picture
     assert_equal pictures[1], pictures[0].previous_picture
   end
+
+  test "to_param" do
+    assert_equal 'ap950115', Picture.new(date: Date.new(1995, 1, 15)).to_param
+    assert_equal 'ap051201', Picture.new(date: Date.new(2005, 12, 1)).to_param
+  end
 end
