@@ -21,4 +21,14 @@ class PictureTest < ActiveSupport::TestCase
     assert_equal 'ap950115', Picture.new(date: Date.new(1995, 1, 15)).to_param
     assert_equal 'ap051201', Picture.new(date: Date.new(2005, 12, 1)).to_param
   end
+
+  test "self.date_from_apid" do
+    assert_equal Date.new(1995, 1, 15), Picture.date_from_apid('ap950115')
+    assert_equal Date.new(2005, 12, 1), Picture.date_from_apid('ap051201')
+
+    assert_equal nil, Picture.date_from_apid('ap')
+    assert_equal nil, Picture.date_from_apid('ap05')
+    assert_equal nil, Picture.date_from_apid('ap0504')
+    assert_equal nil, Picture.date_from_apid('ap053099')
+  end
 end

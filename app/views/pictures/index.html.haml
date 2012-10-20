@@ -2,4 +2,12 @@
   - @pictures.each do |picture|
     %li
       = link_to picture do
-        = picture.media.html_safe
+        - if picture.media
+          = picture.media.html_safe
+
+- content_for :client_templates do
+  %script#picture-tmpl{:type => "text/tmpl"}
+    %li
+      %a{:href => "__HREF"}
+        = "__MEDIA"
+
