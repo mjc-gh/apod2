@@ -16,8 +16,10 @@
 
         %h2
           Mirror of
-          = link_to "NASA's APOD", 'http://apod.nasa.gov/apod/archivepix.html'
+          = link_to "NASA's APOD", 'http://apod.nasa.gov/apod/'
 
     #page
       .container
         = yield
+
+    = yield :client_templates
