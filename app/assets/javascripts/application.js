@@ -13,3 +13,38 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+
+(function(){
+	// realy simple micro-template function that does super-basic
+	// string replace using Object property names
+	//
+	// returns a jQuery object
+	var cache = {};
+
+	this.template = function(str, obj){
+		var tmpl = cache[str] || document.getElementById(str).innerHTML;
+
+		for (var i in obj)
+			tmpl = tmpl.replace('__'+ i.toUpperCase(), obj[i]);
+
+		return $(tmpl);
+	};
+}());
+
+$(function(){
+	var top = $('#top');
+	var win = $(window);
+
+	var top_hgt = top.height();
+
+	win.on('scroll', function(){
+		if (this.scrollY > top_hgt){
+			top.attr('class', 'shrink');
+		} else {
+			top.attr('class', null);
+		}
+	});
+
+	win.trigger('scroll');
+});

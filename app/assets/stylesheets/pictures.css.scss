@@ -2,11 +2,12 @@
 @import "compass/css3";
 
 #pictures {
-  overflow:hidden;
   margin-bottom:100px;
+  text-align:center;
 
   > li {
-    float:left;
+    @include inline-block;
+
     height:200px;
     width:226px;
 
