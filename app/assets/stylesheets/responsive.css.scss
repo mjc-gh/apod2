@@ -41,3 +41,17 @@
     }
   }
 }
+
+
+@media screen and (max-width:1064px) {
+  #picture {
+    padding:0 20px;
+
+    .img {
+      img {
+        width:100%;
+        //heig
+      }
+    }
+  }
+}

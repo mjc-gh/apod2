@@ -1,4 +1,4 @@
-#picture.container
+#picture
   - if @picture.next_picture
     = link_to 'Next', @picture.next_picture, class: 'next'
 
@@ -16,3 +16,6 @@
       = @picture.explanation.html_safe
     - else
       %strong No Explanation Available!
+
+  %p.original
+    = link_to 'View Original', nasa_url(@picture)

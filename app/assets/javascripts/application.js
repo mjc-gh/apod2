@@ -33,12 +33,15 @@
 }());
 
 $(function(){
+	if (location.pathname != '/')
+		return;
+
 	var top = $('#top');
 	var win = $(window);
 
 	var top_hgt = top.height();
 
-	win.on('scroll', function(){
+	win.on('scroll resize', function(){
 		if (this.scrollY > top_hgt){
 			top.attr('class', 'shrink');
 		} else {
