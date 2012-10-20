@@ -7,7 +7,8 @@
 
   .img
     - if @picture.media
-      = @picture.media.html_safe
+      = link_to @picture.media_link, title: 'Click to view larger version' do
+        = @picture.media.html_safe
     - else
       %strong No Image Available!
 
