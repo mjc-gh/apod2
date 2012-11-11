@@ -11,6 +11,8 @@ class ActiveSupport::TestCase
 
   def teardown
     FakeWeb.clean_registry
+
+    mocha_teardown
   end
 
   def html_parser(file)
