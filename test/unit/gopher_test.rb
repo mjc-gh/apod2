@@ -2,35 +2,49 @@ require 'test_helper'
 require_dependency 'gopher'
 
 class GopherTest < ActiveSupport::TestCase
-  context "missing_pictures" do
+  context "apid_index" do
     setup do
       ApodWeb.stubs(:index).returns(html_parser('index.html'))
     end
 
-    test "with empty db" do
-      assert_equal 809, Gopher.missing_pictures.size
+    test "finds all" do
+      assert_equal 809, Gopher.apid_index.size
     end
 
-    test "with 5 missing" do
-      Picture.create(date: Date.new(2012, 9, 29))
-
-      assert_equal 5, Gopher.missing_pictures.size
+    test "includes id" do
+      assert_includes Gopher.apid_index.first, :id
     end
 
-    test "without any missing" do
-      Picture.create(date: Date.new(2012, 10, 4))
-
-      assert_equal 0, Gopher.missing_pictures.size
+    test "includes date" do
+      assert_includes Gopher.apid_index.first, :date
     end
 
-    test "order is correct" do
-      Picture.create(date: Date.new(2012, 10, 1))
-      missing = Gopher.missing_pictures
+    context "missing_pictures" do
+      test "with empty db" do
+        assert_equal 809, Gopher.missing_pictures.size
+      end
 
-      assert_operator missing.size, :>, 0 # not empty
+      test "with 5 missing" do
+        Picture.create(date: Date.new(2012, 9, 29))
 
-      (1..missing.size - 2).each do |index|
-        assert_operator missing[index][:date], :<, missing[index+1][:date]
+        assert_equal 5, Gopher.missing_pictures.size
+      end
+
+      test "without any missing" do
+        Picture.create(date: Date.new(2012, 10, 4))
+
+        assert_equal 0, Gopher.missing_pictures.size
+      end
+
+      test "order is correct" do
+        Picture.create(date: Date.new(2012, 10, 1))
+        missing = Gopher.missing_pictures
+
+        assert_operator missing.size, :>, 0 # not empty
+
+        (1..missing.size - 2).each do |index|
+          assert_operator missing[index][:date], :<, missing[index+1][:date]
+        end
       end
     end
   end
@@ -41,7 +55,7 @@ class GopherTest < ActiveSupport::TestCase
     end
 
     def fetch # returns Picture obj here
-      Gopher.fetch_and_create_picture({ id: 'ap123456', date: Date.new })
+      Gopher.fetch_and_create_picture id: 'ap123456', date: Date.new
     end
 
     test "creates Picture record" do
@@ -81,14 +95,41 @@ class GopherTest < ActiveSupport::TestCase
       assert_equal "#{ApodWeb::base_uri}/image/1210/ison_rolando_1600.jpg", picture.media_link
     end
 
-    context "with utf8 bytes" do
-      setup do
+    test "no B elements found" do
+      Nokogiri::HTML::Document.any_instance.stubs(:css).returns(%w[])
+
+      assert_nil fetch
+    end
+
+    test "no P elements found" do
+      Nokogiri::HTML::Document.any_instance.stubs(:css).with('b').returns(%w[1])
+      Nokogiri::HTML::Document.any_instance.stubs(:css).with('p').returns(%w[])
+
+      assert_nil fetch
+    end
+
+    context "page with utf8" do
+      test "encodes HTML entity" do
         ApodWeb.stubs(:view).returns(html_parser('view_utf.html'))
+
+        assert_includes fetch.explanation, '&oslash'
+      end
+    end
+
+    context "Picture date exists" do
+      setup do
+        Picture.create id: 'ap123456', date: Date.new
       end
 
-      test "encodes HTML entity" do
-        # UTF8 characters are escaped properly (thx nokogiri)
-        assert fetch.explanation.include?('&oslash')
+      test "uses existing picture" do
+        original = Picture.last
+        picture = fetch
+
+        assert_equal original.id, picture.id
+      end
+
+      test "does not create new Picture" do
+        assert_no_difference('Picture.count') { fetch }
       end
     end
   end

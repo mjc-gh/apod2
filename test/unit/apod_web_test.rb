@@ -1,23 +1,25 @@
 require 'test_helper'
 require_dependency 'gopher'
 
-class GopherTest < ActiveSupport::TestCase
+class ApodWebTest < ActiveSupport::TestCase
   INDEX_URI = 'http://apod.nasa.gov/apod/archivepix.html'
   VIEW_URI = 'http://apod.nasa.gov/apod/ap1234.html'
 
-  test "ApodWeb.index returns nokogiri doc" do
-    FakeWeb.register_uri(:get, INDEX_URI, body: '<html></html>')
-    index = ApodWeb.index
+  test "index returns nokogiri doc" do
+    FakeWeb.register_uri :get, INDEX_URI, body: '<html></html>'
 
-    assert index
-    assert_kind_of Nokogiri::HTML::Document, index
+    assert_kind_of Nokogiri::HTML::Document, ApodWeb.index
   end
 
-  test "ApodWeb.view returns nokogiri doc" do
-    FakeWeb.register_uri(:get, VIEW_URI, body: '<html></html>')
-    view = ApodWeb.view('ap1234')
+  test "view returns nokogiri doc" do
+    FakeWeb.register_uri :get, VIEW_URI, body: '<html></html>'
 
-    assert view
-    assert_kind_of Nokogiri::HTML::Document, view
+    assert_kind_of Nokogiri::HTML::Document, ApodWeb.view('ap1234')
+  end
+
+  test "view with invalid UTF8" do
+    FakeWeb.register_uri :get, VIEW_URI, body: fixture_file('view_utf_2.html')
+
+    assert ApodWeb.view('ap1234').text =~ //
   end
 end
