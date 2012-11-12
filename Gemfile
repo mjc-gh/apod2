@@ -12,6 +12,10 @@ gem 'therubyracer'
 gem 'httparty', require: false
 gem 'nokogiri', require: false
 
+group :production do
+  gem 'puma'
+end
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'compass-rails'
