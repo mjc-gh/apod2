@@ -14,6 +14,7 @@ gem 'nokogiri', require: false
 
 group :production do
   gem 'puma'
+  gem 'pg'
 end
 
 group :assets do
