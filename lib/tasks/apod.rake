@@ -5,8 +5,6 @@ namespace :apod do
 
   desc "Count how many are missing"
   task missing: :env do
-    puts "Fetching Index Page..."
-
     missing = Gopher.missing_pictures
 
     puts "Missing #{missing.size} pictures from #{missing.last[:date]} to #{missing.first[:date]}\n"
@@ -15,19 +13,13 @@ namespace :apod do
   desc "Fetch newest pictures"
   task fetch: :env do
     missing = Gopher.missing_pictures
-    limit = ENV['LIMIT'].to_i
-    index = 0
 
     puts "Fetching #{missing.size} Pictures..."
 
     missing.each do |ap|
-      break if !limit.zero? && index >= limit
-
       print "Fetching #{ap[:id]}..."
       Gopher.fetch_and_create_picture(ap)
       print " done\n"
-
-      index += 1
     end
   end
 
