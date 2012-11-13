@@ -16,7 +16,7 @@ class Picture < ActiveRecord::Base
   end
 
   def self.last
-    latest.first
+    latest.first!
   end
 
   def to_param
