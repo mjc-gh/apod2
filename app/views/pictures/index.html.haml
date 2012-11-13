@@ -4,6 +4,8 @@
       = link_to picture do
         - if picture.media
           = picture.media.html_safe
+        - else
+          No Image
 
 #loading
   Loading...
