@@ -5,6 +5,12 @@
         - if picture.media
           = picture.media.html_safe
 
+#loading
+  Loading...
+
+- content_for :scripts do
+  = javascript_include_tag :pictures
+
 - content_for :client_templates do
   %script#picture-tmpl{:type => "text/tmpl"}
     %li
