@@ -6,7 +6,6 @@ class PicturesControllerTest < ActionController::TestCase
 
     get :show, id: 'ap120930'
 
-    assert assigns(:picture)
     assert_response :success
     assert_template :show
   end
@@ -22,7 +21,6 @@ class PicturesControllerTest < ActionController::TestCase
 
     get :index
 
-    assert assigns(:pictures)
     assert_response :success
     assert_template :index
   end
@@ -32,7 +30,21 @@ class PicturesControllerTest < ActionController::TestCase
 
     get :index, last: 'ap120915'
 
-    assert assigns(:pictures)
     assert_equal 14, assigns(:pictures).size
+  end
+
+  test "latest" do
+    Picture.create(date: Date.new(2012, 9, 30))
+
+    get :latest
+
+    assert_response :success
+    assert_template :show
+  end
+
+  test "latest not found" do
+    get :latest
+
+    assert_redirected_to root_url
   end
 end

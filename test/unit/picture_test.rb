@@ -31,4 +31,10 @@ class PictureTest < ActiveSupport::TestCase
     assert_equal nil, Picture.date_from_apid('ap0504')
     assert_equal nil, Picture.date_from_apid('ap053099')
   end
+
+  test "last raises exception when not found" do
+    assert_raises ActiveRecord::RecordNotFound do
+      Picture.last
+    end
+  end
 end
