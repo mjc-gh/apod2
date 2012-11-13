@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
   respond_to :html, :json, :xml
 
   def index
-    @pictures = Picture.latest.limit(20)
+    @pictures = Picture.latest.limit(60)
 
     if params[:last]
       if date = Picture.date_from_apid(params[:last])
@@ -23,6 +23,6 @@ class PicturesController < ApplicationController
   def latest
     @picture = Picture.last
 
-    respond_with @picture
+    respond_with @picture, template: 'pictures/show'
   end
 end
