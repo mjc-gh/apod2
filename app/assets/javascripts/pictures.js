@@ -1,13 +1,21 @@
-$(function(){
+(function(){
   var win = $(window);
-  var body = $('body');
+  var doc = $(document);
 
   var pictures = $('#pictures');
-  var nomore = false;
+  var loading = $('#loading');
+
+  var has_no_more = false;
+  var is_loading = false;
 
   function load(pics){
-    if (pics.length === 0)
-      nomore = true;
+    is_loading = false;
+    loading.fadeOut();
+
+    if (pics.length === 0){
+      has_no_more = true;
+      return;
+    }
 
     for (var i = 0, pic; pic = pics[i]; i++){
       var href = '/pictures/'+ pic.apid;
@@ -19,13 +27,18 @@ $(function(){
     }
   }
 
-  $(window).on('scroll', function(ev){
-    if (win.height() + win.scrollTop() < body.height()) return;
-    if (nomore) return;
+  win.on('scroll', function(ev){
+    if (has_no_more || is_loading) return;
 
-    var last = pictures.children().last().find('a');
-    var apid = last.attr('href').split('/').pop();
+    if (win.scrollTop() + 1 >= doc.height() - win.height()) {
+      is_loading = true;
 
-    $.get('/pictures', { last: apid }, load, 'json');
+      var last = pictures.children().last().find('a');
+      var apid = last.attr('href').split('/').pop();
+
+      loading.fadeIn();
+
+      $.get('/pictures', { last: apid }, load, 'json');
+    }
   });
-});
+}());

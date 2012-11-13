@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 
 
 (function(){
@@ -43,9 +42,9 @@ $(function(){
 
 	win.on('scroll resize', function(){
 		if (this.scrollY > top_hgt){
-			top.attr('class', 'shrink');
+			//top.attr('class', 'shrink');
 		} else {
-			top.attr('class', null);
+			//top.attr('class', null);
 		}
 	});
 
