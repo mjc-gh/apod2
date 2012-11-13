@@ -3,19 +3,13 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = Picture.latest.limit(60)
-
-    if params[:last]
-      if date = Picture.date_from_apid(params[:last])
-        @pictures = @pictures.where('date < ?', date)
-      end
-    end
+    @pictures = @pictures.before_apid(params[:last]) if params[:last]
 
     respond_with @pictures
   end
 
   def show
-    date = Picture.date_from_apid(params[:id])
-    @picture = Picture.where(date: date).first!
+    @picture = Picture.by_apid(params[:id]).first!
 
     respond_with @picture
   end

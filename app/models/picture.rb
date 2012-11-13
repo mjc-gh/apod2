@@ -3,9 +3,10 @@ class Picture < ActiveRecord::Base
 
   validates :date, presence: true
 
-  scope :latest, lambda {
-    order('date DESC')
-  }
+  scope :latest, order('date DESC')
+
+  scope :before_apid, lambda { |id| where 'date < ?', date_from_apid(id) }
+  scope :by_apid, lambda { |id| where date: date_from_apid(id) }
 
   def next_picture
     self.class.where('date > ?', date).order('date ASC').first
