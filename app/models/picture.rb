@@ -15,10 +15,6 @@ class Picture < ActiveRecord::Base
     self.class.where('date < ?', date).order('date DESC').first
   end
 
-  def self.last
-    latest.first!
-  end
-
   def to_param
     # update for year >=2095
     date.strftime 'ap%y%m%d'

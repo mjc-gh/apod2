@@ -21,7 +21,7 @@ class PicturesController < ApplicationController
   end
 
   def latest
-    @picture = Picture.last
+    @picture = Picture.latest.first!
 
     respond_with @picture, template: 'pictures/show'
   end
