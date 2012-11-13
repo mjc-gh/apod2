@@ -20,10 +20,8 @@ $(function(){
   }
 
   $(window).on('scroll', function(ev){
-    if (body.height() <= win.height() + win.scrollTop()) return;
+    if (win.height() + win.scrollTop() < body.height()) return;
     if (nomore) return;
-
-    console.log('scroll');
 
     var last = pictures.children().last().find('a');
     var apid = last.attr('href').split('/').pop();
