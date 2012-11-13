@@ -18,10 +18,14 @@ group :production do
 end
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'compass-rails'
+  gem 'uglifier', '>= 1.3.0'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass', '~> 3.2.3'
+  gem 'compass', '~> 0.13.alpha.0'
+
+  gem 'sass-rails'
+  gem 'compass-rails'
+  gem 'animate'
 end
 
 group :development, :test do
