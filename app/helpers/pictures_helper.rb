@@ -1,5 +1,11 @@
 module PicturesHelper
-  def nasa_url(pic_or_apid = nil)
-    "http://apod.nasa.gov/apod/#{pic_or_apid.try(:apid) || pic_or_apid}"
+  def nasa_url(apid = nil)
+    base_url = "http://apod.nasa.gov/apod/"
+
+    case apid
+    when NilClass then base_url
+    when Picture then "#{base_url}#{apid.apid}.html"
+    else "#{base_url}#{apid}.html"
+    end
   end
 end
