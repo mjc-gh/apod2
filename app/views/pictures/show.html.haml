@@ -13,6 +13,10 @@
       %strong No Image Available!
 
   %p
+    - if @picture.credit
+      = @picture.credit
+
+  %p
     - if @picture.explanation
       = @picture.explanation.html_safe
     - else
