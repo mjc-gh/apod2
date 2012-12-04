@@ -14,7 +14,7 @@
 
   %p
     - if @picture.credit
-      = @picture.credit
+      = @picture.credit.html_safe
 
   %p
     - if @picture.explanation
