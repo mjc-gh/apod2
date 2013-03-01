@@ -1,16 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
-
+gem 'rails', '4.0.0.beta1'
 gem 'yajl-ruby'
+
+gem 'haml', github: 'haml/haml'
 gem 'haml-rails'
-gem 'jquery-rails'
 
 gem 'execjs'
 gem 'therubyracer'
 
 gem 'httparty', require: false
 gem 'nokogiri', require: false
+
+gem 'jquery-rails'
 
 group :production do
   gem 'puma'
@@ -20,11 +22,9 @@ end
 group :assets do
   gem 'uglifier', '>= 1.3.0'
 
-  gem 'sass', '~> 3.2.3'
-  gem 'compass', '~> 0.13.alpha.0'
+  gem 'sass-rails', '~> 4.0.0.beta1'
+  gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
 
-  gem 'sass-rails'
-  gem 'compass-rails'
   gem 'animate'
 end
 
@@ -33,7 +33,8 @@ group :development, :test do
 end
 
 group :test do
-  # for gopher tests
+  gem 'ruby-prof'
+
   gem 'contest'
 
   gem 'mocha', :require => false
@@ -42,8 +43,7 @@ group :test do
   gem 'guard'
   gem 'guard-minitest'
 
-  gem 'ruby-prof'
-  gem 'rb-inotify', '~> 0.8.8'
+  gem 'rb-inotify', '~> 0.9.0'
 end
 
 group :development do
