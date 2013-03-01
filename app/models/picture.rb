@@ -1,9 +1,7 @@
 class Picture < ActiveRecord::Base
-  attr_protected
-
   validates :date, presence: true
 
-  scope :latest, order('date DESC')
+  scope :latest, lambda { order('date DESC') }
 
   scope :before_apid, lambda { |id| where 'date < ?', date_from_apid(id) }
   scope :by_apid, lambda { |id| where date: date_from_apid(id) }
