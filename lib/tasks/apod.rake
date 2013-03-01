@@ -7,7 +7,7 @@ namespace :apod do
   task missing: :env do
     missing = Gopher.missing_pictures
 
-    puts "Missing #{missing.size} pictures from #{missing.last[:date]} to #{missing.first[:date]}\n"
+    puts "Missing #{missing.size} pictures from #{missing.first[:date]} to #{missing.last[:date]}\n"
   end
 
   desc "Fetch newest pictures"
