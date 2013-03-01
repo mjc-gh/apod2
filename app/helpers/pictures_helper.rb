@@ -3,7 +3,7 @@ module PicturesHelper
     base_url = "http://apod.nasa.gov/apod/"
 
     case apid
-    when NilClass then base_url
+    when nil, '' then base_url
     when Picture then "#{base_url}#{apid.apid}.html"
     else "#{base_url}#{apid}.html"
     end
