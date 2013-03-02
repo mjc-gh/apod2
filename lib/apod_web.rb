@@ -6,7 +6,7 @@ class ApodWeb
 
   base_uri 'http://apod.nasa.gov/apod'
   parser Proc.new { |body|
-    Nokogiri::HTML.parse body, base_uri, 'iso-8859-1'
+    Nokogiri::HTML.parse body, base_uri
   }
 
   def self.index
