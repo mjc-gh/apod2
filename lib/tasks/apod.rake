@@ -18,7 +18,7 @@ namespace :apod do
 
     missing.each do |ap|
       print "Fetching #{ap[:id]}..."
-      Gopher.fetch_and_create_picture(ap)
+      Gopher.create_picture(ap)
       print " done\n"
     end
   end
@@ -38,7 +38,7 @@ namespace :apod do
 
     index.each do |ap|
       print "Fetching #{ap[:id]}..."
-      Gopher.fetch_and_create_picture(ap)
+      Gopher.create_picture(ap)
       print " done\n"
     end
   end
