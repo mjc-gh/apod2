@@ -1,10 +1,10 @@
 require_dependency 'apod_web'
 
 class Gopher
-  # Get all AP-Dates from the index page
+  # Collect and return all APIDs from the index page
   #
   # @returns [Array] list of ident strings
-  def self.apid_index
+  def self.picture_index
     parser = ApodWeb.index
 
     [].tap do |apids|
@@ -18,42 +18,57 @@ class Gopher
     end
   end
 
-  # Getting a list of missing idents (AP-Dates)
+  # Gets a list of missing APIDs. This will
+  # use +Picture.last+.
   #
   # @returns [Array] list of ident strings
   def self.missing_pictures
     parser = ApodWeb.index
     last = Picture.last.try(:date)
 
-    return apid_index unless last
+    return picture_index unless last
 
-    apid_index.tap { |idx|
+    picture_index.tap do |idx|
       idx.reject! { |ap| ap[:date] <= last }
-    }
+    end
   end
 
   # Fetch the page and create a new Picture record
   #
+  # Interally this method call +parse_view+.
+  #
   # @params [Hash] opts options hash with id and date properties
   # @returns [Picture] newly created Picture object
-  def self.fetch_and_create_picture(opts)
+  def self.create_picture(opts)
+    return unless attributes = self.parse_view(opts[:id])
+
+    Picture.where(date: opts[:date]).first_or_initialize.tap do |picture|
+      picture.attributes = attributes
+      picture.save
+    end
+  end
+
+  # Parse the APOD page and return the extracted
+  # data
+  #
+  # @param [Hash] opts options hash with id and date properties
+  # @returns [Hash] hash of parsed data
+  def self.parse_view(id)
     base_uri = ApodWeb::base_uri
-    parser = ApodWeb.view(opts[:id])
+    parser = ApodWeb.view(id)
 
     bold_els = parser.css('b')
     exp_node = parser.css('p').find { |p| p.text =~ /^\s+Explanation/ }
 
-    if bold_els.size < 2 || exp_node.nil?
-      Rails.logger.warn "Invalid Page Structure for #{opts[:id]}"
+    {}.tap do |attrs|
+      if bold_els.size < 2 || exp_node.nil?
+        Rails.logger.warn "Invalid Page Structure for #{id}"
 
-      return nil
-    end
+        return
+      end
 
-    Picture.where(date: opts[:date]).first_or_initialize.tap do |picture|
       # get title from first B element within this center
-      picture.title = bold_els.first.text
-      picture.title.strip!
-
+      attrs[:title] = bold_els.first.text
 
       # extract credit html; start at credit B element and join
       # the HTML of all the child nodes after this element
@@ -61,16 +76,13 @@ class Gopher
       credit_nodes = credit_el.parent.children
       credit_index = credit_nodes.index(credit_el) + 1
 
-      picture.credit = credit_nodes.slice(credit_index..-1).map { |node| node.to_html }.join
-      picture.credit.strip!
-
+      attrs[:credit] = credit_nodes.slice(credit_index..-1).map { |node| node.to_html }.join
 
       # collect striped html of all of the explaination element's children ignoring certian nodes
       exp_fragments = exp_node.children.map { |node| node.to_html unless node.text.blank? || node.text =~ /^\s+Explanation/ }
       exp_fragments.compact!
 
-      picture.explanation = exp_fragments.join.strip
-
+      attrs[:explanation] = exp_fragments.join
 
       # look for media; start with img element
       imgs = parser.css('img')
@@ -83,14 +95,11 @@ class Gopher
 
         href = img.parent[:href]
 
-        picture.media = img.to_html
-        picture.media_link = href =~ /^http/ ? href : "#{base_uri}/#{href}"
+        attrs[:media] = img.to_html
+        attrs[:media_link] = href =~ /^http/ ? href : "#{base_uri}/#{href}"
       end
 
-      # TODO handle video or other media
-
-      # Lastly, we save the picture
-      picture.save
+      attrs.keys.each { |key| attrs[key].strip! }
     end
   end
 end

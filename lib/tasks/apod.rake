@@ -11,7 +11,7 @@ namespace :apod do
   end
 
   desc "Fetch newest pictures"
-  task fetch: :env do
+  task latest: :env do
     missing = Gopher.missing_pictures
 
     puts "Fetching #{missing.size} Pictures..."
@@ -24,8 +24,8 @@ namespace :apod do
   end
 
   desc "Fetch all pictures by querying DB for existence"
-  task index: :env do
-    index = Gopher.apid_index
+  task all: :env do
+    index = Gopher.picture_index
 
     if ENV['START']
       date = Picture.date_from_apid(ENV['START'])
