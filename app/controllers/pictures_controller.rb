@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-  respond_to :html, :json, :xml
+  respond_to :html, :json
 
   def index
     @pictures = Picture.latest.limit(60)
