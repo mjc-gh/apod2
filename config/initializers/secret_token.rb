@@ -1,0 +1,1 @@
+Apod2::Application.config.secret_key_base = ENV['SECRET_KEY_BASE'] || 'ec4e0258decea6697a9c90a662bf016ddec529a55ba77097534c96c368b8d41c275e0b3029c2f26872cefe2cf3afb44ef7b367d7846feca4b471b566975f5b87'
