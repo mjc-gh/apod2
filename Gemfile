@@ -33,17 +33,15 @@ group :development, :test do
 end
 
 group :test do
-  gem 'ruby-prof'
-
-  gem 'contest'
-
-  gem 'mocha', :require => false
-  gem 'fakeweb'
+  gem 'mocha', require: false
 
   gem 'guard'
   gem 'guard-minitest'
 
   gem 'rb-inotify', '~> 0.9.0'
+
+  gem 'fakeweb'
+  gem 'ruby-prof'
 end
 
 group :development do
