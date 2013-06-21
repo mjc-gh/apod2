@@ -6,6 +6,12 @@ class ApodWeb
 
   base_uri 'http://apod.nasa.gov/apod'
   parser Proc.new { |body|
+    if body.encoding != Encoding::UTF_8
+      body.encode! 'UTF-8', undef: :replace, replace: ''
+    elsif !body.valid_encoding?
+      body.encode! 'UTF-8', 'binary', undef: :replace, replace: ''
+    end
+
     Nokogiri::HTML.parse body, base_uri
   }
 

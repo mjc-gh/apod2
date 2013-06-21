@@ -93,10 +93,16 @@ class GopherTest < ActiveSupport::TestCase
     assert_nil fetch
   end
 
-  test "encodes HTML entity" do
-    picture = fetch('view_utf.html')
+  test "handles invalid UTF" do
+    picture = fetch('view_utf_2.html')
 
-    assert_includes picture.explanation, '&oslash'
+    refute_nil picture
+  end
+
+  test "handles more invalid UTF" do
+    picture = fetch('view_utf_3.html')
+
+    refute_nil picture
   end
 
   test "create_picture returns existing picture" do

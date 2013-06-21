@@ -16,10 +16,7 @@ class ActiveSupport::TestCase
   end
 
   def html_parser(file)
-    databits = fixture_file(file).force_encoding('ascii')
-    databits.force_encoding('ascii-8bit') unless databits.valid_encoding?
-
-    Nokogiri::HTML(databits)
+    ApodWeb.parser.call fixture_file(file)
   end
 
   def fixture_file(*path)
