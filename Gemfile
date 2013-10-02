@@ -28,8 +28,8 @@ end
 group :assets do
   gem 'uglifier', '>= 1.3.0'
 
-  gem 'sass-rails', '~> 4.0.0.beta1'
-  gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
+  gem 'sass-rails'
+  gem 'compass-rails'
 
   gem 'animate'
 end
