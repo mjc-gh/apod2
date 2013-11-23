@@ -3,7 +3,7 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = Picture.latest.limit(6)
-    @pictures = @pictures.before_apid(params[:last])
+    @pictures = @pictures.before_apid(params[:last]) if params[:last]
 
     respond_with @pictures
   end
