@@ -2,8 +2,7 @@ class PicturesController < ApplicationController
   respond_to :html, :json
 
   def index
-    @pictures = Picture.latest.limit(6)
-    @pictures = @pictures.before_apid(params[:last]) 
+    @pictures = Picture.latest.limit(6).before_apid(params[:last])
 
     respond_with @pictures
   end

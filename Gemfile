@@ -2,9 +2,6 @@ ruby '2.0.0'
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0.beta1'
-gem 'yajl-ruby'
-
-gem 'haml', github: 'haml/haml'
 gem 'haml-rails'
 
 gem 'execjs'
