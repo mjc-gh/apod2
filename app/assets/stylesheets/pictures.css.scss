@@ -1,6 +1,5 @@
 @import "compass/utilities/general/clearfix";
 @import "compass/css3";
-@import "animate";
 
 #pictures {
   text-align:center;
@@ -73,11 +72,12 @@
     }
   }
 }
-@include keyframes(blink){
-  0%   { opacity:1.00;  }
-  50%  { opacity:0.25; }
-  100% { opacity:1.00;  }
-}
+
+/*@include keyframes(blink){*/
+  /*0%   { opacity:1.00;  }*/
+  /*50%  { opacity:0.25; }*/
+  /*100% { opacity:1.00;  }*/
+/*}*/
 
 #loading {
   display:none;
@@ -87,5 +87,5 @@
   font-weight:bold;
   font-style:italic;
 
-  @include animation(blink 1s linear 0s infinite);
+  /*@include animation(blink 1s linear 0s infinite);*/
 }
