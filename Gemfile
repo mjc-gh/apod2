@@ -1,7 +1,7 @@
 ruby '2.1.0'
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 gem 'haml-rails'
 
 gem 'execjs'
@@ -14,7 +14,9 @@ gem 'jquery-rails'
 
 gem 'uglifier', '>= 1.3.0'
 
-gem 'sass-rails'
+gem 'sass-rails', github: 'zakelfassi/sass-rails'
+
+gem 'compass', '~> 1.0.0.alpha.19'
 gem 'compass-rails'
 
 group :heroku do
