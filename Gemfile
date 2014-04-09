@@ -1,4 +1,4 @@
-ruby '2.0.0'
+ruby '2.1.0'
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
@@ -14,8 +14,8 @@ gem 'jquery-rails'
 
 gem 'uglifier', '>= 1.3.0'
 
-gem 'sass-rails', github: 'rails/sass-rails'
-gem 'compass-rails', "~> 2.0.alpha.0"
+gem 'sass-rails'
+gem 'compass-rails'
 
 group :heroku do
   gem 'rails_log_stdout',       github: 'heroku/rails_log_stdout'
