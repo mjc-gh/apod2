@@ -1,19 +1,13 @@
 development:
-  adapter: postgresql
-  username: apod2
-  password: apod2
-  encoding: unicode
-  database: apod2_development
-  pool: 20
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
   timeout: 5000
 
 test:
-  adapter: postgresql
-  username: apod2
-  password: apod2
-  encoding: unicode
-  database: apod2_test
-  pool: 20
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
   timeout: 5000
 
 production:

@@ -24,4 +24,7 @@ Apod2::Application.configure do
 
   # Debug mode disables concatenation and preprocessing of assets.
   config.assets.debug = true
+
+  # Add LiveReload middleware
+  config.middleware.insert_before Rack::Lock, Rack::LiveReload
 end

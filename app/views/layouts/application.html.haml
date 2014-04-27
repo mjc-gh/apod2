@@ -1,30 +1,12 @@
 !!!
-%html
+%html{ng: {app: 'apod'}}
   %head
     %title APOD 2.0
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-  %link{:href => 'http://fonts.googleapis.com/css?family=Syncopate|Ubuntu', :rel => 'stylesheet', :type => 'text/css'}
+  %link{:href => 'http://fonts.googleapis.com/css?family=Ubuntu:300,400,500', rel: 'stylesheet', type: 'text/css'}
 
   %body
-    #top
-      .container
-        %h1
-          = link_to 'Astronomy Picture of the Day', root_url
-          = link_to 'APOD', root_url, class: 'short'
-
-          %sup 2
-
-        %h2
-          Mirror of
-          = link_to "NASA's APOD", nasa_url
-
-    #page
-      .container
-        = yield
-
-    = yield :scripts
-    = yield :client_templates
-
+    = yield

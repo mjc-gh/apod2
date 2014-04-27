@@ -1,10 +1,4 @@
 #picture
-  - if @picture.next_picture
-    = link_to 'Next', @picture.next_picture, class: 'next'
-
-  - if @picture.previous_picture
-    = link_to 'Previous', @picture.previous_picture, class: 'previous'
-
   .img
     - if @picture.media
       = link_to @picture.media_link, title: 'Click to view larger version' do
@@ -12,16 +6,23 @@
     - else
       %strong No Image Available!
 
-  %p.center
+  .credit
     - if @picture.credit
       %strong Credit:
       = @picture.credit.html_safe
 
-  %p
+  .explanation
+    %h1 #{@picture.title}
+
     - if @picture.explanation
       = @picture.explanation.html_safe
     - else
       %strong No Explanation Available!
 
-  %p.original
-    = link_to 'View Original', nasa_url(@picture)
+    = link_to 'View Original', nasa_url(@picture), class: 'original'
+
+
+  .links
+    = link_to 'Next', @picture.next_picture, class: 'next' if @picture.next_picture
+    = link_to 'Home', root_url
+    = link_to 'Previous', @picture.previous_picture, class: 'previous' if @picture.previous_picture

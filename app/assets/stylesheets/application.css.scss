@@ -1,16 +1,125 @@
 /*
  *= require_self
- *= require reset.css.scss
- *= require page.css.scss
- *= require pictures.css.scss
- *= require responsive.css.scss
  */
 
 @import "compass";
+@import "compass/reset";
 
-.container {
-  @include pie-clearfix;
+* { @include box-sizing(border-box); }
 
-  max-width:1400px;
-  margin:0 auto;
+html, body {
+    height:100%;
+}
+
+body {
+    font-family:'Ubuntu';
+    font-weight:300;
+
+    overflow-y:scroll;
+    height:100%;
+
+    a {
+        text-decoration:none;
+        color:darkgreen;
+    }
+}
+
+[apod-pictures] {
+    @include pie-clearfix;
+    overflow:hidden;
+
+    [apod-picture] {
+        position:relative;
+        overflow:hidden;
+        float:left;
+        display:block;
+        margin:2px;
+
+        a {
+            display:block;
+
+            img {
+                display:block;
+            }
+
+            span {
+                @include transition(bottom ease-in 0.25s);
+
+                position:absolute;
+                right:0px;
+                bottom:-100px;
+                padding:0 10px;
+                color:#EFEFEF;
+                background:rgba(17, 28, 30, 0.50);
+                text-align:right;
+                font-size:30px;
+                line-height:40px;
+                height:40px;
+                width:100%;
+
+                &.ng-enter {
+                    bottom:-100px;
+                }
+
+                &.visible, &.ng-enter-active {
+                    bottom:0px;
+                }
+            }
+        }
+    }
+}
+
+// For pictures/show
+#picture {
+    text-align:center;
+    margin:20px 2px;
+
+    .img {
+        clear:both;
+
+        a {
+            display:block;
+
+            img {
+                max-width:100%;
+            }
+        }
+    }
+
+    .links {
+        max-width:1024px;
+        margin:20px auto;
+
+        > a {
+            font-size:24px;
+            font-weight:400;
+        }
+
+        .next {
+            float:right;
+        }
+
+        .previous {
+            float:left;
+        }
+    }
+
+    .credit {
+        margin:0 2em 1em;
+    }
+
+    .explanation {
+        h1 {
+            font-size:34px;
+            font-weight:500;
+            margin-bottom:0.5em;
+        }
+
+        max-width:1024px;
+        margin:0 auto;
+
+        .original {
+            font-style:italic;
+        }
+    }
 }

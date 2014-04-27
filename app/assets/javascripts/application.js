@@ -1,52 +1,52 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
-//
-//= require jquery
-//= require jquery_ujs
+//= require angular
+//= require angular-animate
+//= require_self
+//= require pictures_service
+//= require pictures_directive
+//= require picture_directive
 
+angular.module('apod', ['ngAnimate'], ['$httpProvider', function($httpProvider){
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json';
 
-(function(){
-	// realy simple micro-template function that does super-basic
-	// string replace using Object property names
-	//
-	// returns a jQuery object
-	var cache = {};
+}]).directive('body', ['$window', '$document', function($window, $docment){
+    var docEl = $docment[0].documentElement;
 
-	this.template = function(str, obj){
-		var tmpl = cache[str] || document.getElementById(str).innerHTML;
+    return {
+        restrict: 'E',
 
-		for (var i in obj)
-			tmpl = tmpl.replace('__'+ i.toUpperCase(), obj[i]);
+        link:function($scope, $elem, $attrs){
+            var win = angular.element($window);
+            var el = $elem[0];
 
-		return $(tmpl);
-	};
-}());
+            var lastBcast, screen;
 
-$(function(){
-	if (location.pathname != '/')
-		return;
+            function bcast(){
+                $scope.$broadcast('$load');
+            }
 
-	var top = $('#top');
-	var win = $(window);
+            function set(){
+                var height = docEl.clientHeight;
+                var width = docEl.clientWidth;
 
-	var top_hgt = top.height();
+                $scope.screen = screen = {
+                    height: height,
+                    width: width,
+                    ratio: height / width
+                };
 
-	win.on('scroll resize', function(){
-		if (this.scrollY > top_hgt){
-			//top.attr('class', 'shrink');
-		} else {
-			//top.attr('class', null);
-		}
-	});
+                $scope.$apply();
+            }
 
-	win.trigger('scroll');
-});
+            win.on('load', set);
+            win.on('resize', set);
+            win.on('orientationchange', set);
+
+            win.on('scroll', function(ev){
+                var diff = (el.scrollTop + el.offsetHeight) - el.scrollHeight;
+
+                // TODO throttle this event
+                if (diff === 0) $scope.$broadcast('$scrollEnd');
+            });
+        }
+    };
+}]);

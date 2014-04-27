@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20121110224722) do
     t.text     "media_link"
     t.text     "credit"
     t.text     "explanation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "pictures", ["date"], name: "index_pictures_on_date", unique: true

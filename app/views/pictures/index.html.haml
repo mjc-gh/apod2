@@ -1,21 +1,5 @@
-%ul#pictures
-  - @pictures.each do |picture|
-    %li
-      = link_to picture do
-        - if picture.media
-          = picture.media.html_safe
-        - else
-          No Image
-
-#loading
-  Loading...
-
-- content_for :scripts do
-  = javascript_include_tag :pictures
-
-- content_for :client_templates do
-  %script#picture-tmpl{:type => "text/tmpl"}
-    %li
-      %a{:href => "__HREF"}
-        = "__MEDIA"
-
+%ol{apod: {pictures: true}}
+  %li{ng: {repeat: 'picture in pictures'}, apod: {picture: true}}
+    %a{ng: {href: '/pictures/{{picture.apid}}'}}
+      %img{ng: {src: '{{picture.media_link}}', title: '{{picture.title}}'}}
+      %span {{picture.title}}

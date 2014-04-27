@@ -1,10 +1,11 @@
 class Picture < ActiveRecord::Base
   validates :date, presence: true
 
-  scope :latest, lambda { order('date DESC') }
+  scope :latest, -> { order('date DESC') }
+  scope :with_media, -> { where('media_link IS NOT NULL') }
 
-  scope :before_apid, lambda { |id| where 'date < ?', date_from_apid(id) }
-  scope :by_apid, lambda { |id| where date: date_from_apid(id) }
+  scope :before_apid, ->(id) { where 'date < ?', date_from_apid(id) }
+  scope :by_apid, ->(id) { where date: date_from_apid(id) }
 
   def next_picture
     self.class.where('date > ?', date).order('date ASC').first
@@ -15,7 +16,7 @@ class Picture < ActiveRecord::Base
   end
 
   def to_param
-    # update for year >=2095
+    # TODO Update for year >=2095
     date.strftime 'ap%y%m%d'
   end
 
@@ -23,7 +24,7 @@ class Picture < ActiveRecord::Base
 
   def serializable_hash(options = {})
     super options.merge!({
-      only: [:title, :date, :media],
+      only: [:title, :date, :credit, :media_link],
       methods: [:apid]
     })
   end
