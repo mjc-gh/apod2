@@ -67,6 +67,35 @@ body {
             }
         }
     }
+
+    @mixin loader {
+        @include border-radius(6px);
+
+        content:'Loading More Space...';
+        position:fixed;
+        width:300px;
+        height:34px;
+        line-height:34px;
+        left:50%;
+        z-index:1;
+        font-size:24px;
+        font-weight:400;
+        text-align:center;
+        margin-left:-150px;
+        color:#FFFFFF;
+        background:rgba(0,0,0,0.9);
+    }
+
+
+    &.load-above:before {
+        @include loader;
+        top:20px;
+    }
+
+    &.load-below:after {
+        @include loader;
+        bottom:20px;
+    }
 }
 
 // For pictures/show

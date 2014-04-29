@@ -97,6 +97,8 @@ angular.module('apod').directive('apodPictures', ['apodPictureService', function
                 var lastPic = pics && pics[pics.length - 1];
                 var last = lastPic && lastPic.apid;
 
+                $elem.addClass('load-below');
+
                 request = $pictures.get(limit, last).then(function(newPics){
                     var existing = $scope.pictures;
                     var pics;
@@ -106,7 +108,11 @@ angular.module('apod').directive('apodPictures', ['apodPictureService', function
                 });
 
                 // Always clear the request promise when complete
-                request['finally'](function(){ request = undefined; });
+                request['finally'](function(){
+                    $elem.removeClass('load-below');
+
+                    request = undefined;
+                });
             }
 
             $scope.$watch('screen', setScreen);
