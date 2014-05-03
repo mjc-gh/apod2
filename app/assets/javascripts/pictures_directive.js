@@ -1,10 +1,6 @@
 angular.module('apod').directive('apodPictures', ['apodPictureService', function($pictures){
     var MARGIN = 4; // hacky
 
-    function errHandler(err){
-        console.warn(err);
-    }
-
     return {
         restrict: 'A',
         scope: true,
@@ -119,9 +115,7 @@ angular.module('apod').directive('apodPictures', ['apodPictureService', function
             $scope.$watch('pictures', layout);
 
             $scope.$on('$scrollEnd', function(){
-                if (request == undefined){
-                    load();
-                }
+                if (request == undefined) load();
             });
         }
     };

@@ -7,7 +7,6 @@ angular.module('apod').directive('apodPicture', ['$animate', function($animate){
             var title = $elem.find('span');
 
             $elem.on('mouseenter', function(){
-                // TODO setup a delay
                 $animate.addClass(title, 'visible');
             });
 
