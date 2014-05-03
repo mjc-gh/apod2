@@ -3,7 +3,7 @@ class PicturesController < ApplicationController
 
   def index
     @pictures = Picture.latest.with_media.limit(limit_param)
-    @pictures = @pictures.before_apid(params[:last]) if params[:last]
+    @pictures = @pictures.before_apid(last_param) unless last_param.nil?
 
     respond_with @pictures
   end
@@ -22,12 +22,16 @@ class PicturesController < ApplicationController
 
   protected
 
-  def limit_param
-    @limit_param ||= valid_limit_param
+  def picture_params
+    @picture_params ||= params.permit(:last, :limit)
   end
 
-  def valid_limit_param
-    limit = params[:limit].to_i
+  def last_param
+    picture_params[:last]
+  end
+
+  def limit_param
+    limit = picture_params[:limit].to_i
     limit = 8 if limit < 1 || limit > 25
     limit
   end

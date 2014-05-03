@@ -1,0 +1,54 @@
+// For pictures/show
+#picture {
+    text-align:center;
+    margin:20px 2px;
+
+    .img {
+        clear:both;
+
+        a {
+            display:block;
+
+            img {
+                max-width:100%;
+            }
+        }
+    }
+
+    .links {
+        max-width:1024px;
+        margin:20px auto;
+
+        > a {
+            font-size:24px;
+            font-weight:400;
+        }
+
+        .next {
+            float:right;
+        }
+
+        .previous {
+            float:left;
+        }
+    }
+
+    .credit {
+        margin:0 2em 1em;
+    }
+
+    .explanation {
+        h1 {
+            font-size:34px;
+            font-weight:500;
+            margin-bottom:0.5em;
+        }
+
+        max-width:1024px;
+        margin:0 auto;
+
+        .original {
+            font-style:italic;
+        }
+    }
+}

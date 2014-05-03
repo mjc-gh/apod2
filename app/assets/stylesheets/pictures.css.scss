@@ -1,0 +1,74 @@
+[apod-pictures] {
+    @include pie-clearfix;
+    overflow:hidden;
+
+    [apod-picture] {
+        position:relative;
+        overflow:hidden;
+        float:left;
+        display:block;
+        margin:2px;
+
+        a {
+            display:block;
+
+            img {
+                display:block;
+            }
+
+            span {
+                @include transition(bottom ease-in 0.25s);
+
+                position:absolute;
+                right:0px;
+                bottom:-100px;
+                padding:0 10px;
+                color:#EFEFEF;
+                background:rgba(17, 28, 30, 0.50);
+                text-align:right;
+                font-size:30px;
+                line-height:40px;
+                height:40px;
+                width:100%;
+
+                &.ng-enter {
+                    bottom:-100px;
+                }
+
+                &.visible, &.ng-enter-active {
+                    bottom:0px;
+                }
+            }
+        }
+    }
+
+    @mixin loader {
+        @include border-radius(6px);
+
+        content:'Loading More Space...';
+        position:fixed;
+        width:300px;
+        height:34px;
+        line-height:34px;
+        left:50%;
+        z-index:1;
+        font-size:24px;
+        font-weight:400;
+        text-align:center;
+        margin-left:-150px;
+        color:#FFFFFF;
+        background:rgba(0,0,0,0.9);
+    }
+
+
+    &.load-above:before {
+        @include loader;
+        top:20px;
+    }
+
+    &.load-below:after {
+        @include loader;
+        bottom:20px;
+    }
+}
+

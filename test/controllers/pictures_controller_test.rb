@@ -26,9 +26,9 @@ class PicturesControllerTest < ActionController::TestCase
   end
 
   test "index with last" do
-    (1..30).each { |n| Picture.create(date: Date.new(2012, 9, n)) }
+    (1..30).each { |n| Picture.create(date: Date.new(2012, 9, n), media_link: 'http://nasa.gov/img.png') }
 
-    get :index, last: 'ap120915'
+    get :index, last: 'ap120915', limit: 25
 
     assert_equal 14, assigns(:pictures).size
   end
