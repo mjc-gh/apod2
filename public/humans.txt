@@ -1,0 +1,12 @@
+/* TEAM */
+  Developer: Michael J Coyne
+  Site: http://mikeycgto.me
+
+/* THANKS */
+  Name: NASA'S Astronoy Picture of the Day
+  Site: http://apod.nasa.gov/apod/
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Angular.js
+  Software: Ruby on Rails
