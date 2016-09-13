@@ -44,8 +44,8 @@ angular.module('apod', ['ngAnimate'], ['$httpProvider', function($httpProvider){
             win.on('scroll', function(ev){
                 var diff = (el.scrollTop + el.offsetHeight) - el.scrollHeight;
 
-                // TODO throttle this event
-                if (diff === 0) $scope.$broadcast('$scrollEnd');
+                if (diff === 0)
+                    $scope.$broadcast('$scrollEnd');
             });
         }
     };
